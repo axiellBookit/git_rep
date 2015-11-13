@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:loadBundle basename="com.axiell.bookit.web.patron" var="patron_msg" />
+
+	<div class="row">
+		<div class="col w-75pct">
+			<div class="block">
+				<h:outputLabel for="email-address" styleClass="required" value="#{patron_msg.label_email}" />
+				<p:focus for="email-address" />
+				<h:inputText id="email-address"
+				    label="#{patron_msg.label_email}"  
+				    title="#{patron_msg.label_email}"
+					value="#{patronBean.addEmailAddress.EMAIL_ADDR}"
+					validatorMessage="#{patron_msg.label_email}: #{format_msg.message_invalid_format}" >		
+					<f:validateRegex pattern="#{format_msg.email}"/>
+				</h:inputText>						
+			</div>
+		</div>
+		<div class="col w-25pct">
+			<div class="block">
+				<h:outputLabel value="#{patron_msg.label_active}" for="is-active" />
+				<p:selectOneButton id="is-active"
+					value="#{patronBean.addEmailAddress.ACTIVEWrapper}">
+					<f:selectItem itemLabel="#{header_msg.btn_toggle_unselect_label}" itemValue="#{header_msg.btn_toggle_unselect_value}" />
+					<f:selectItem itemLabel="#{header_msg.btn_toggle_select_label}" itemValue="#{header_msg.btn_toggle_select_value}" />
+				</p:selectOneButton>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col w-100pct">
+			<div class="block">
+				<h:outputLabel for="email-note" value="#{patron_msg.label_descr}" />
+				<h:inputText id="email-note"
+				    label="#{patron_msg.label_descr}"  
+				    title="#{patron_msg.label_descr}"
+					value="#{patronBean.addEmailAddress.NOTE}" />
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col w-100pct">
+			<div class="block">
+				<p:commandButton styleClass="btn submit-small"
+					value="#{patron_msg.button_add}"
+					actionListener="#{patronBean.addPatronEmail}"
+					process="@form:patron-tabs:email-workarea" 
+					update="@form:patron-tabs:email-workarea :dlg-info-form"/>
+
+				<p:commandButton styleClass="btn submit-small"
+					value="#{patron_msg.button_cancel}"
+					actionListener="#{patronBean.cancelAddPatronEmail}"
+					update="@form:patron-tabs:email-workarea" />						
+			</div>
+		</div>
+	</div>		
+</ui:composition>
